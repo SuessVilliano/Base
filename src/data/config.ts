@@ -43,17 +43,29 @@ export const siteConfig = {
   },
 
   // --- BOOKING / GHL EMBEDS -------------------------------------------------
-  // TODO: replace these placeholder URLs with real GoHighLevel calendar embed URLs.
-  // Each one is rendered inside an <iframe> via the GHLCalendar component.
+  // All three CTAs point at the BASE GHL calendar widget for now.
+  // To split into separate calendars later, create new GHL calendars and
+  // swap in their widget IDs below.
   booking: {
     bookSpace:
-      "https://api.leadconnectorhq.com/widget/booking/REPLACE_WITH_GHL_BOOKING_ID",
+      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
     tour:
-      "https://api.leadconnectorhq.com/widget/booking/REPLACE_WITH_GHL_TOUR_ID",
+      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
     partnerCall:
-      "https://api.leadconnectorhq.com/widget/booking/REPLACE_WITH_GHL_PARTNER_ID",
+      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
     eventInquiry:
-      "https://api.leadconnectorhq.com/widget/form/REPLACE_WITH_GHL_FORM_ID",
+      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
+  },
+
+  // --- GHL INTEGRATION ------------------------------------------------------
+  // locationId and chatWidgetId are public (they ship inside widget URLs and
+  // <script> tags). The PIT token is sensitive and lives in the server-only
+  // env var GHL_PIT_TOKEN — never put it in this file.
+  ghl: {
+    locationId: "nxMcQTjRPDUhC92RKGiK",
+    chatWidgetId: "6a16dc861ce15bb9e949a77a",
+    apiBase: "https://services.leadconnectorhq.com",
+    apiVersion: "2021-07-28",
   },
 
   bookingDisclaimer:

@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { siteConfig } from "@/data/config";
 import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
+import { GHLChatWidget } from "@/components/chat/GHLChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -63,6 +64,7 @@ export default function RootLayout({
         <Footer />
         <StickyCTA />
         <LocalBusinessJsonLd />
+        <GHLChatWidget />
       </body>
     </html>
   );
