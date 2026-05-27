@@ -43,18 +43,37 @@ export const siteConfig = {
   },
 
   // --- BOOKING / GHL EMBEDS -------------------------------------------------
-  // All three CTAs point at the BASE GHL calendar widget for now.
-  // To split into separate calendars later, create new GHL calendars and
-  // swap in their widget IDs below.
+  // Every value below is just a GHL widget ID (the last segment of the
+  // widget URL — e.g. "t30YhxbLwudG91PG6qip"). The full embed URL is built
+  // automatically by src/lib/booking.ts.
+  //
+  // Per-space calendars: each value is one of —
+  //   • a GHL widget ID  → that calendar is used for this space
+  //   • another space id → alias; uses that space's calendar (resolved
+  //     recursively). Use this when one calendar covers multiple rooms,
+  //     e.g. Main Hall + Stage + Upper Lounge are physically one resource.
+  //   • null             → no dedicated calendar yet; falls back to `default`
   booking: {
-    bookSpace:
-      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
-    tour:
-      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
-    partnerCall:
-      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
-    eventInquiry:
-      "https://api.leadconnectorhq.com/widget/booking/t30YhxbLwudG91PG6qip",
+    default: "t30YhxbLwudG91PG6qip", // BASE master calendar
+    tour: "t30YhxbLwudG91PG6qip", // TODO: separate "Schedule a Tour" calendar
+    partner: "t30YhxbLwudG91PG6qip", // TODO: separate "Partner intro call" calendar
+
+    // Per-space calendars. As you create dedicated calendars in GHL, paste
+    // their widget IDs here in place of `null`.
+    bySpace: {
+      "parking-lot": null,
+      courtyard: null,
+      "main-hall": null,
+      stage: "main-hall", // shares Main Hall — bundled rental
+      "upper-lounge": "main-hall", // shares Main Hall — bundled rental
+      "podcast-room": null,
+      boardroom: null,
+      "recording-studio": null,
+      "creative-studio": null,
+      "back-studio": "recording-studio", // alias to recording studio for now
+      offices: null,
+      bathrooms: null, // not bookable, but listed for completeness
+    } as Record<string, string | null>,
   },
 
   // --- GHL INTEGRATION ------------------------------------------------------

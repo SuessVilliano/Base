@@ -51,8 +51,42 @@ All content lives in **`src/data/`** so the site can be updated without touching
 
 ### Replacing GHL calendar links
 
-Open `src/data/config.ts` and replace the placeholder URLs in `siteConfig.booking.*`.
-Any URL containing `REPLACE_WITH_GHL` renders a clear "placeholder" overlay until updated.
+Open `src/data/config.ts`. Every entry under `siteConfig.booking` is just a
+GHL widget ID (the last segment of the widget URL) — the full embed URL is
+constructed for you.
+
+```ts
+booking: {
+  default: "t30YhxbLwudG91PG6qip",     // master fallback
+  tour:    "t30YhxbLwudG91PG6qip",     // dedicated "Schedule a Tour" calendar
+  partner: "t30YhxbLwudG91PG6qip",     // dedicated "Partner intro call" calendar
+  bySpace: {
+    "main-hall":        "abc123…",     // dedicated calendar
+    "stage":            "main-hall",   // alias — bundled with Main Hall
+    "upper-lounge":     "main-hall",   // alias
+    "podcast-room":     null,          // no dedicated cal yet → falls back to default
+    // …
+  }
+}
+```
+
+Recommended GHL setup (one calendar per bookable resource):
+
+1. Main Hall (bundles Stage + Upper Lounge)
+2. Courtyard
+3. Outdoor Lot
+4. Podcast Room
+5. Recording Studio
+6. Creative Studio
+7. Boardroom
+8. Offices / Flex Rooms
+9. (Optional) "Schedule a Tour" calendar
+10. (Optional) "Partner intro" calendar
+
+Group them as a GHL **calendar group** so visitors see one widget but each
+room books independently. As you create each calendar, paste its widget ID
+into the `bySpace` map and the matching "Book This Space" CTA routes there
+automatically.
 
 ### Replacing placeholder images
 
