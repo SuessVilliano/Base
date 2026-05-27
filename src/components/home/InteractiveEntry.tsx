@@ -85,11 +85,13 @@ export function InteractiveEntry() {
   const interiorGlow = useTransform(stageProgress, [0.75, 1], [0, 1]);
 
   // Stage label opacity ranges
+  // Stage 1 is hidden at progress=0 so it can't collide with the hero overlay.
+  // The hero fully fades out at progress=0.14; stages take over from there.
   const stageOpacities = [
-    useTransform(stageProgress, [0.0, 0.05, 0.18, 0.24], [1, 1, 1, 0]),
-    useTransform(stageProgress, [0.18, 0.24, 0.4, 0.46], [0, 1, 1, 0]),
-    useTransform(stageProgress, [0.4, 0.46, 0.6, 0.66], [0, 1, 1, 0]),
-    useTransform(stageProgress, [0.6, 0.66, 0.86, 0.92], [0, 1, 1, 0]),
+    useTransform(stageProgress, [0.10, 0.16, 0.24, 0.30], [0, 1, 1, 0]),
+    useTransform(stageProgress, [0.24, 0.30, 0.44, 0.50], [0, 1, 1, 0]),
+    useTransform(stageProgress, [0.44, 0.50, 0.62, 0.68], [0, 1, 1, 0]),
+    useTransform(stageProgress, [0.62, 0.68, 0.86, 0.92], [0, 1, 1, 0]),
   ];
 
   // Final reveal
@@ -99,7 +101,7 @@ export function InteractiveEntry() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[420vh] bg-base-black"
+      className="always-dark relative h-[420vh] bg-base-black"
       aria-label="Interactive entry to BASE"
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
@@ -197,13 +199,14 @@ export function InteractiveEntry() {
           </div>
         </motion.div>
 
-        {/* Stage labels (top-left HUD) */}
-        <div className="pointer-events-none absolute left-5 top-24 z-20 sm:left-10 sm:top-28">
+        {/* Stage labels — bottom-left HUD on mobile (so they sit below the
+            building silhouette and clear the hero), top-left on >=sm. */}
+        <div className="pointer-events-none absolute bottom-28 left-4 z-20 w-[min(86vw,360px)] sm:bottom-auto sm:left-10 sm:top-28 sm:w-auto sm:max-w-sm">
           {stages.map((s, i) => (
             <motion.div
               key={s.id}
               style={reduce ? undefined : { opacity: stageOpacities[i] }}
-              className="absolute left-0 top-0 max-w-sm"
+              className="absolute inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-auto sm:left-0 sm:top-0 sm:max-w-sm"
             >
               <StageLabel stage={s} />
             </motion.div>
@@ -244,35 +247,35 @@ function HeroOverlay({ progress }: { progress: MotionValue<number> }) {
       <p className="eyebrow text-base-fog">
         {siteConfig.address.city}, {siteConfig.address.state}
       </p>
-      <h1 className="h-display mt-5 text-5xl text-white sm:text-7xl md:text-8xl">
+      <h1 className="h-display mt-4 text-[44px] leading-[0.95] text-white sm:mt-5 sm:text-7xl md:text-8xl">
         Enter <span className="text-base-blue">BASE</span>
       </h1>
-      <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.32em] text-base-fog">
+      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.28em] text-base-fog sm:mt-4 sm:text-[11px] sm:tracking-[0.32em]">
         {siteConfig.tagline}
       </p>
-      <p className="mx-auto mt-7 max-w-xl text-balance text-base text-base-fog md:text-lg">
+      <p className="mx-auto mt-5 max-w-xl text-balance text-sm leading-relaxed text-base-fog sm:mt-7 sm:text-base md:text-lg">
         {siteConfig.shortDescription}
       </p>
-      <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:mt-9 sm:gap-3">
         <Link href="/spaces" className="btn-primary">
           Explore the Space
         </Link>
         <Link href="/book#tour" className="btn-secondary">
           Book a Tour
         </Link>
-        <Link href="/book" className="btn-ghost">
+        <Link href="/book" className="btn-ghost hidden sm:inline-flex">
           Host an Event →
         </Link>
       </div>
       <motion.div
         aria-hidden
-        className="mt-12 flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-base-stone"
+        className="mt-8 flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-base-stone sm:mt-12"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}
       >
         <span>Scroll to walk in</span>
-        <span className="block h-10 w-px bg-gradient-to-b from-base-blue to-transparent" />
+        <span className="block h-8 w-px bg-gradient-to-b from-base-blue to-transparent sm:h-10" />
       </motion.div>
     </motion.div>
   );
@@ -285,13 +288,15 @@ function StageLabel({
 }) {
   const Icon = stage.icon;
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/40 p-5 backdrop-blur-md">
+    <div className="rounded-2xl border border-white/10 bg-black/55 p-4 backdrop-blur-md sm:p-5">
       <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-base-blue">
         <Icon size={12} />
         {stage.label}
       </div>
-      <h3 className="mt-3 font-display text-2xl text-white">{stage.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-base-fog">
+      <h3 className="mt-2 font-display text-xl leading-tight text-white sm:mt-3 sm:text-2xl">
+        {stage.title}
+      </h3>
+      <p className="mt-1.5 text-[13px] leading-snug text-base-fog sm:mt-2 sm:text-sm sm:leading-relaxed">
         {stage.copy}
       </p>
     </div>

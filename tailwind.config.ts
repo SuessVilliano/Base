@@ -1,20 +1,23 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
+        // BASE palette — values resolve from CSS variables defined in
+        // globals.css so they flip with the .dark class on <html>.
         base: {
-          black: "#0A0A0B",
-          ink: "#111114",
-          smoke: "#1A1A1F",
-          ash: "#2A2A30",
-          stone: "#5C5C66",
-          fog: "#A4A4AE",
-          paper: "#F5F5F2",
-          white: "#FFFFFF",
-          // Strong blue accent from BASE deck
+          black: "rgb(var(--c-base-black) / <alpha-value>)",
+          ink: "rgb(var(--c-base-ink) / <alpha-value>)",
+          smoke: "rgb(var(--c-base-smoke) / <alpha-value>)",
+          ash: "rgb(var(--c-base-ash) / <alpha-value>)",
+          stone: "rgb(var(--c-base-stone) / <alpha-value>)",
+          fog: "rgb(var(--c-base-fog) / <alpha-value>)",
+          paper: "rgb(var(--c-base-paper) / <alpha-value>)",
+          white: "rgb(var(--c-base-white) / <alpha-value>)",
+          // Strong blue accent from BASE deck (constant across themes)
           blue: {
             DEFAULT: "#1E5BFF",
             50: "#EAF0FF",

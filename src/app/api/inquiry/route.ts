@@ -38,6 +38,8 @@ const FORM_TAGS: Record<string, string[]> = {
   inquiry: ["base-website", "event-inquiry"],
   tour: ["base-website", "tour-request"],
   partner: ["base-website", "partner-inquiry"],
+  referral: ["base-website", "referral-signup"],
+  membership: ["base-website", "membership-interest"],
 };
 
 export async function POST(request: Request) {

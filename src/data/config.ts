@@ -97,12 +97,13 @@ export const siteConfig = {
   // --- NAV ------------------------------------------------------------------
   nav: [
     { label: "Home", href: "/" },
-    { label: "Explore Spaces", href: "/spaces" },
-    { label: "Interactive Map", href: "/map" },
+    { label: "Spaces", href: "/spaces" },
+    { label: "Map", href: "/map" },
     { label: "Book", href: "/book" },
+    { label: "Membership", href: "/membership" },
+    { label: "Refer & Earn", href: "/referral" },
     { label: "Use Cases", href: "/use-cases" },
     { label: "About", href: "/about" },
-    { label: "Impact", href: "/impact" },
     { label: "Partner", href: "/partner" },
     { label: "Contact", href: "/contact" },
   ],

@@ -7,6 +7,28 @@
     --font-display: "Inter", system-ui, sans-serif;
     --font-sans: "Inter", system-ui, sans-serif;
     --font-mono: ui-monospace, monospace;
+
+    /* LIGHT theme defaults (used when <html> does NOT have .dark) */
+    --c-base-black: 245 245 242; /* page background */
+    --c-base-ink: 255 255 255; /* surfaces */
+    --c-base-smoke: 245 245 242; /* surface-2 */
+    --c-base-ash: 228 228 222; /* surface-3 */
+    --c-base-stone: 138 138 148; /* muted text */
+    --c-base-fog: 84 84 94; /* secondary text */
+    --c-base-paper: 14 14 17; /* primary text */
+    --c-base-white: 10 10 12; /* "strong" foreground */
+  }
+
+  html.dark {
+    /* DARK theme — original BASE palette */
+    --c-base-black: 10 10 11;
+    --c-base-ink: 17 17 20;
+    --c-base-smoke: 26 26 31;
+    --c-base-ash: 42 42 48;
+    --c-base-stone: 92 92 102;
+    --c-base-fog: 164 164 174;
+    --c-base-paper: 245 245 242;
+    --c-base-white: 255 255 255;
   }
 
   html {
@@ -16,6 +38,9 @@
   body {
     @apply bg-base-black text-base-paper antialiased;
     font-feature-settings: "ss01", "cv11";
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
   }
 
   ::selection {
@@ -26,6 +51,57 @@
   :where(a, button, input, textarea, select):focus-visible {
     @apply outline-none ring-2 ring-base-blue ring-offset-2 ring-offset-base-black;
   }
+
+  /* ---------------------------------------------------------------------------
+   * Light-mode tweaks for white-overlay utilities used throughout the site.
+   * Components use bg-white/X and border-white/X heavily for the dark glass
+   * look; in light mode those become black/X so contrast inverts cleanly.
+   * ------------------------------------------------------------------------ */
+  html:not(.dark) .bg-white\/5 { background-color: rgba(0, 0, 0, 0.04); }
+  html:not(.dark) .bg-white\/\[0\.03\] { background-color: rgba(0, 0, 0, 0.03); }
+  html:not(.dark) .bg-white\/\[0\.06\] { background-color: rgba(0, 0, 0, 0.05); }
+  html:not(.dark) .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06); }
+  html:not(.dark) .border-white\/5 { border-color: rgba(0, 0, 0, 0.06); }
+  html:not(.dark) .border-white\/10 { border-color: rgba(0, 0, 0, 0.08); }
+  html:not(.dark) .border-white\/15 { border-color: rgba(0, 0, 0, 0.10); }
+  html:not(.dark) .border-white\/20 { border-color: rgba(0, 0, 0, 0.12); }
+  html:not(.dark) .text-white { color: rgb(14 14 17); }
+  html:not(.dark) .hover\:text-white:hover { color: rgb(14 14 17); }
+  /* Preserve white text on solid color backgrounds (buttons, pills, badges) */
+  html:not(.dark) .btn-primary,
+  html:not(.dark) .btn-primary *,
+  html:not(.dark) .bg-base-blue,
+  html:not(.dark) .bg-base-blue * {
+    color: #fff;
+  }
+  html:not(.dark) .bg-base-blue.text-base-blue,
+  html:not(.dark) .bg-base-blue .text-base-blue {
+    color: #1E5BFF;
+  }
+
+  /* Sections built on hardcoded dark gradients keep their cinematic feel
+   * even in light mode (intentional). Apply `.always-dark` to opt out:
+   * the dark CSS variables get pinned inside that subtree. */
+  .always-dark {
+    --c-base-black: 10 10 11;
+    --c-base-ink: 17 17 20;
+    --c-base-smoke: 26 26 31;
+    --c-base-ash: 42 42 48;
+    --c-base-stone: 92 92 102;
+    --c-base-fog: 164 164 174;
+    --c-base-paper: 245 245 242;
+    --c-base-white: 255 255 255;
+    color: rgb(245 245 242);
+  }
+  .always-dark .text-white { color: #fff; }
+  .always-dark .bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+  .always-dark .bg-white\/\[0\.03\] { background-color: rgba(255, 255, 255, 0.03); }
+  .always-dark .bg-white\/\[0\.06\] { background-color: rgba(255, 255, 255, 0.06); }
+  .always-dark .bg-white\/10 { background-color: rgba(255, 255, 255, 0.10); }
+  .always-dark .border-white\/5 { border-color: rgba(255, 255, 255, 0.05); }
+  .always-dark .border-white\/10 { border-color: rgba(255, 255, 255, 0.10); }
+  .always-dark .border-white\/15 { border-color: rgba(255, 255, 255, 0.15); }
+  .always-dark .border-white\/20 { border-color: rgba(255, 255, 255, 0.20); }
 }
 
 @layer components {

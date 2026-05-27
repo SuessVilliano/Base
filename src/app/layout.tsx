@@ -40,10 +40,29 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0B" },
+    { media: "(prefers-color-scheme: light)", color: "#F5F5F2" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
+
+// Inline script — runs synchronously before hydration so the right theme
+// class is on <html> before first paint (no flash).
+const themeInitScript = `
+(function(){
+  try {
+    var stored = localStorage.getItem('base-theme');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var dark = stored ? stored === 'dark' : true; /* default to dark */
+    if (dark) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+  } catch (e) {
+    document.documentElement.classList.add('dark');
+  }
+})();
+`.trim();
 
 export default function RootLayout({
   children,
@@ -51,7 +70,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html
+      lang="en"
+      className={`${inter.variable} dark`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body className="min-h-screen bg-base-black text-base-paper">
         <a
           href="#main"
