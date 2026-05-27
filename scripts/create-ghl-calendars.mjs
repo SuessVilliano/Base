@@ -37,19 +37,16 @@ if (!TOKEN) {
 // minBookingMinutes is enforced via slotDuration × N; we use slotDuration
 // for the discrete slot and rely on GHL UI to optionally enforce minimum.
 // ---------------------------------------------------------------------------
+// GHL wants one openHours entry per day, with daysOfTheWeek=[<day>].
+// Day numbering is Sunday=0 ... Saturday=6 (JS Date convention).
 const ALL_DAYS = [0, 1, 2, 3, 4, 5, 6];
-const STANDARD_HOURS = [
-  {
-    daysOfTheWeek: ALL_DAYS,
-    hours: [{ openHour: 9, openMinute: 0, closeHour: 22, closeMinute: 0 }],
-  },
-];
-const EXTENDED_HOURS = [
-  {
-    daysOfTheWeek: ALL_DAYS,
-    hours: [{ openHour: 8, openMinute: 0, closeHour: 23, closeMinute: 0 }],
-  },
-];
+const hoursForAllDays = (openHour, openMinute, closeHour, closeMinute) =>
+  ALL_DAYS.map((d) => ({
+    daysOfTheWeek: [d],
+    hours: [{ openHour, openMinute, closeHour, closeMinute }],
+  }));
+const STANDARD_HOURS = hoursForAllDays(9, 0, 22, 0);
+const EXTENDED_HOURS = hoursForAllDays(8, 0, 23, 0);
 
 const calendars = [
   {

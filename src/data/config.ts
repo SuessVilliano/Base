@@ -54,25 +54,23 @@ export const siteConfig = {
   //     e.g. Main Hall + Stage + Upper Lounge are physically one resource.
   //   • null             → no dedicated calendar yet; falls back to `default`
   booking: {
-    default: "t30YhxbLwudG91PG6qip", // BASE master calendar
-    tour: "t30YhxbLwudG91PG6qip", // TODO: separate "Schedule a Tour" calendar
-    partner: "t30YhxbLwudG91PG6qip", // TODO: separate "Partner intro call" calendar
+    default: "t30YhxbLwudG91PG6qip", // BASE master calendar ("Book At Base")
+    tour: "iXn95c5zJYEHFLjQ0GJR",
+    partner: "ell275ECc7R1dIgRyddQ",
 
-    // Per-space calendars. As you create dedicated calendars in GHL, paste
-    // their widget IDs here in place of `null`.
     bySpace: {
-      "parking-lot": null,
-      courtyard: null,
-      "main-hall": null,
+      "parking-lot": "XYeZFoqrtohm0G5DjMn9",
+      courtyard: "DVqvDCqvevosfHwVxdNf",
+      "main-hall": "dNAUGkgXf3eJcXrIlnsB",
       stage: "main-hall", // shares Main Hall — bundled rental
       "upper-lounge": "main-hall", // shares Main Hall — bundled rental
-      "podcast-room": null,
-      boardroom: null,
-      "recording-studio": null,
-      "creative-studio": null,
+      "podcast-room": "jOCnfIkTjHCTc0miNkFD",
+      boardroom: "wqJjSWMPQDs9C9GfCE06",
+      "recording-studio": "UWknLRoOCiIVub8ceswv",
+      "creative-studio": "ENl2V1p2u0tUtKIHBOTf",
       "back-studio": "recording-studio", // alias to recording studio for now
-      offices: null,
-      bathrooms: null, // not bookable, but listed for completeness
+      offices: "Kre2q7a2GtVDw8hcx07Y",
+      bathrooms: null,
     } as Record<string, string | null>,
   },
 

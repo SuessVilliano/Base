@@ -88,10 +88,11 @@ export function calendarUrlForSpace(spaceId?: string | null): ResolvedCalendar {
 }
 
 export function tourCalendar(): ResolvedCalendar {
-  const id = siteConfig.booking.tour ?? siteConfig.booking.default;
+  const def: string = siteConfig.booking.default;
+  const id: string = siteConfig.booking.tour ?? def;
   return {
     url: widgetUrl(id),
-    isDedicated: id !== siteConfig.booking.default,
+    isDedicated: id !== def,
     spaceId: null,
     spaceName: "Tour",
     widgetId: id,
@@ -99,10 +100,11 @@ export function tourCalendar(): ResolvedCalendar {
 }
 
 export function partnerCalendar(): ResolvedCalendar {
-  const id = siteConfig.booking.partner ?? siteConfig.booking.default;
+  const def: string = siteConfig.booking.default;
+  const id: string = siteConfig.booking.partner ?? def;
   return {
     url: widgetUrl(id),
-    isDedicated: id !== siteConfig.booking.default,
+    isDedicated: id !== def,
     spaceId: null,
     spaceName: "Partner intro",
     widgetId: id,
