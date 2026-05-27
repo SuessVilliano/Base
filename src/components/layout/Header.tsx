@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { LogIn, Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { siteConfig } from "@/data/config";
 import { Logo } from "@/components/brand/Logo";
@@ -70,6 +70,13 @@ export function Header() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <ThemeToggle />
+          <Link
+            href="/member"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[13px] font-medium text-base-paper transition-colors hover:bg-white/10"
+          >
+            <LogIn size={13} />
+            Member Login
+          </Link>
           <Link href="/book" className="btn-primary text-[13px]">
             Book a Space
           </Link>
@@ -109,7 +116,14 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Link href="/book" className="btn-primary mt-3 w-full">
+              <Link
+                href="/member"
+                className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-base-paper"
+              >
+                <LogIn size={14} />
+                Member Login
+              </Link>
+              <Link href="/book" className="btn-primary mt-2 w-full">
                 Book a Space
               </Link>
             </div>

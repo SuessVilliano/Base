@@ -15,7 +15,7 @@ import { siteConfig } from "@/data/config";
 // =============================================================================
 
 type InquiryBody = {
-  formType?: "inquiry" | "tour" | "partner";
+  formType?: "inquiry" | "tour" | "partner" | "referral" | "membership";
   name?: string;
   email?: string;
   phone?: string;
@@ -26,14 +26,20 @@ type InquiryBody = {
   space?: string;
   needsAV?: string;
   needsOutdoor?: string;
+  budgetRange?: string;
+  smsOptIn?: boolean;
   message?: string;
   // tour form
   preferredDate?: string;
   note?: string;
   // partner form
   partnerType?: string;
+  // membership form
+  membershipTier?: string;
 };
 
+// Tag taxonomy MUST match what GHL workflows trigger on — see
+// `automations/workflows/blueprints.md`. Always hyphenated, never colons.
 const FORM_TAGS: Record<string, string[]> = {
   inquiry: ["base-website", "event-inquiry"],
   tour: ["base-website", "tour-request"],
@@ -87,9 +93,11 @@ async function sendToGhl(
   const lastName = rest.join(" ");
 
   const tags = [...(FORM_TAGS[formType] ?? FORM_TAGS.inquiry)];
-  if (body.eventType) tags.push(`event:${slug(body.eventType)}`);
-  if (body.space) tags.push(`space:${slug(body.space)}`);
-  if (body.partnerType) tags.push(`partner:${slug(body.partnerType)}`);
+  if (body.eventType) tags.push(`event-${slug(body.eventType)}`);
+  if (body.space) tags.push(`space-${slug(body.space)}`);
+  if (body.partnerType) tags.push(`partner-${slug(body.partnerType)}`);
+  if (body.membershipTier) tags.push(`tier-${slug(body.membershipTier)}`);
+  if (body.smsOptIn) tags.push("sms-opt-in");
 
   const contactPayload: Record<string, unknown> = {
     locationId,
@@ -156,13 +164,16 @@ function formatNote(body: InquiryBody, formType: string) {
     `Source: BASE website (${formType})`,
     body.eventType ? `Event type: ${body.eventType}` : null,
     body.partnerType ? `Partner type: ${body.partnerType}` : null,
+    body.membershipTier ? `Membership tier: ${body.membershipTier}` : null,
     body.space ? `Space of interest: ${body.space}` : null,
     body.desiredDate ? `Desired date: ${body.desiredDate}` : null,
     body.preferredDate ? `Tour date: ${body.preferredDate}` : null,
     body.guestCount ? `Estimated guests: ${body.guestCount}` : null,
+    body.budgetRange ? `Budget range: ${body.budgetRange}` : null,
     body.needsAV ? `Needs A/V: ${body.needsAV}` : null,
     body.needsOutdoor ? `Needs outdoor/food truck: ${body.needsOutdoor}` : null,
     body.organization ? `Organization: ${body.organization}` : null,
+    body.smsOptIn ? `SMS opt-in: yes` : null,
     "",
     body.message || body.note || "",
   ].filter(Boolean);

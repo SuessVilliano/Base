@@ -73,10 +73,17 @@ export function InteractiveEntry() {
   const buildingScale = useTransform(stageProgress, [0, 0.85], [0.9, 1.4]);
   const buildingY = useTransform(stageProgress, [0, 1], ["8%", "-6%"]);
 
-  // Gate animation (open between 0.2 and 0.5)
-  const leftGateX = useTransform(stageProgress, [0.18, 0.45], ["0%", "-100%"]);
-  const rightGateX = useTransform(stageProgress, [0.18, 0.45], ["0%", "100%"]);
-  const gateOpacity = useTransform(stageProgress, [0.45, 0.55], [1, 0]);
+  // Gate animation. Gates must stay hidden through the hero and the
+  // parking-lot stage (progress 0 → ~0.30) — otherwise the closed gate
+  // panels sit over the hero CTAs and compete with the parking stage
+  // label. Fade in only once the parking stage has cleared.
+  const leftGateX = useTransform(stageProgress, [0.34, 0.50], ["0%", "-100%"]);
+  const rightGateX = useTransform(stageProgress, [0.34, 0.50], ["0%", "100%"]);
+  const gateOpacity = useTransform(
+    stageProgress,
+    [0.28, 0.34, 0.50, 0.58],
+    [0, 1, 1, 0],
+  );
 
   // Door animation (open between 0.65 and 0.9)
   const leftDoor = useTransform(stageProgress, [0.65, 0.9], ["0deg", "-92deg"]);

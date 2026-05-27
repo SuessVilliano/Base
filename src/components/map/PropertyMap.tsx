@@ -281,14 +281,36 @@ export function PropertyMap() {
                   );
                 })}
 
-                {/* Entry gate marker between parking and courtyard */}
-                <g transform="translate(42 70)">
-                  <line x1="0" y1="-6" x2="0" y2="6" stroke="#1E5BFF" strokeWidth="0.6" />
-                  <circle r="0.9" fill="#1E5BFF" />
-                  <text x="0.6" y="-7" fontSize="1.6" fill="#A4A4AE" fontFamily="Inter">
-                    Gates
-                  </text>
-                </g>
+                {/* Entry gate marker — only surfaces when the visitor is
+                    interacting with the two zones it connects (parking lot
+                    + courtyard). Keeping it always-on clashed with room
+                    labels and the section header above. */}
+                {(hovered === "parking-lot" || hovered === "courtyard") && (
+                  <g
+                    transform="translate(42 70)"
+                    style={{ pointerEvents: "none" }}
+                  >
+                    <line
+                      x1="0"
+                      y1="-6"
+                      x2="0"
+                      y2="6"
+                      stroke="#1E5BFF"
+                      strokeWidth="0.6"
+                      opacity="0.85"
+                    />
+                    <circle r="0.9" fill="#1E5BFF" opacity="0.9" />
+                    <text
+                      x="1"
+                      y="0.5"
+                      fontSize="1.6"
+                      fill="#A4A4AE"
+                      fontFamily="Inter"
+                    >
+                      Gates
+                    </text>
+                  </g>
+                )}
               </svg>
             </div>
           </div>

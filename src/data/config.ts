@@ -85,6 +85,19 @@ export const siteConfig = {
     apiVersion: "2021-07-28",
   },
 
+  // --- MEMBER PORTAL --------------------------------------------------------
+  // GHL Client Club is the single source of truth for member auth, bookings,
+  // billing, profile, and the BASE Community. The website's /member route
+  // exists as a brand-front landing page that deep-links members in.
+  community: {
+    portalUrl: "https://base.app.clientclub.net/",
+    loginUrl: "https://base.app.clientclub.net/login",
+    communityUrl: "https://base.app.clientclub.net/communities",
+    bookingsUrl: "https://base.app.clientclub.net/bookings",
+    billingUrl: "https://base.app.clientclub.net/billing",
+    profileUrl: "https://base.app.clientclub.net/profile",
+  },
+
   bookingDisclaimer:
     "Submitting this form does not confirm your booking. A BASE team member will contact you to confirm availability, pricing, and event requirements.",
 
@@ -118,6 +131,7 @@ export const siteConfig = {
     { label: "Map", href: "/map" },
     { label: "Book", href: "/book" },
     { label: "Membership", href: "/membership" },
+    { label: "Members", href: "/member" },
     { label: "Refer & Earn", href: "/referral" },
     { label: "Use Cases", href: "/use-cases" },
     { label: "About", href: "/about" },

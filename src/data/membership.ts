@@ -53,9 +53,9 @@ export const baseMemberPerks: MemberPerk[] = [
       "Bring collaborators in for the day — every member gets monthly guest passes.",
   },
   {
-    label: "Community Slack",
+    label: "BASE Community",
     description:
-      "Real-time access to the BASE network — entrepreneurs, creatives, and operators.",
+      "Real-time access to the BASE network — entrepreneurs, creatives, and operators — inside our private community space.",
   },
 ];
 
@@ -74,7 +74,7 @@ export const membershipTiers: MembershipTier[] = [
       { label: "4 free hours / month", description: "Flex space, podcast room, or office" },
       { label: "Priority booking (7-day head start)", description: "" },
       { label: "2 guest passes / month", description: "" },
-      { label: "Community Slack", description: "" },
+      { label: "BASE Community access", description: "" },
       { label: "Member-only events", description: "" },
     ],
     cta: "Start Creator",
@@ -96,7 +96,7 @@ export const membershipTiers: MembershipTier[] = [
       { label: "6 guest passes / month", description: "" },
       { label: "1 boardroom day-pass / month", description: "" },
       { label: "Mailing address & package handling", description: "" },
-      { label: "Community Slack + founder-only channel", description: "" },
+      { label: "BASE Community + founder-only channel", description: "" },
     ],
     cta: "Join as Founder",
     ctaHref: "/membership/join?tier=founder",
@@ -141,7 +141,7 @@ export const foundingOffer = {
   perks: [
     "Locked-in lifetime price — never raised while you're a member",
     "Double credits in your first 90 days",
-    "Founding Member badge in our community Slack + listings",
+    "Founding Member badge in BASE Community + listings",
     "Annual founder dinner with the BASE team and partners",
     "Early access to new rooms, programs, and partner offers",
   ],
