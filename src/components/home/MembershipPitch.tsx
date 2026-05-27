@@ -52,7 +52,7 @@ export function MembershipPitch() {
                 { k: "10–30%", v: "Off bookings, every time" },
                 { k: "Priority", v: "Up to 30 days early on new dates" },
                 { k: "Credits", v: "Monthly free hours included" },
-                { k: "Network", v: "Slack + member-only events" },
+                { k: "Network", v: "BASE Community + member-only events" },
               ].map((b) => (
                 <div
                   key={b.k}
