@@ -1,1 +1,163 @@
-# Base
+# BASE — Wilmington's Event & Creative Campus
+
+A premium, animated website for **BASE** at 920 North Church Street, Wilmington, Delaware.
+The site treats the physical property as an interactive digital walkthrough:
+**Parking Lot → Gates → Courtyard → Double Doors → Interior**, then routes visitors to
+the 2D map, 3D walkthrough, booking, use cases, and partnership tracks.
+
+**BASE = Business · Arts · Sports · Education.**
+
+---
+
+## Stack
+
+- **Next.js 14 (App Router)** + **TypeScript**
+- **Tailwind CSS** with a custom black / white / BASE-blue palette
+- **Framer Motion** for scroll-driven hero, parallax, and reveal animations
+- **lucide-react** icons
+- Server-side metadata, `sitemap.xml`, `robots.txt`, and JSON-LD for SEO
+
+---
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+# open http://localhost:3000
+```
+
+Build for production:
+
+```bash
+npm run build
+npm run start
+```
+
+---
+
+## Editing content
+
+All content lives in **`src/data/`** so the site can be updated without touching components:
+
+| File | What's inside |
+| --- | --- |
+| `src/data/config.ts` | Address, phone, email, navigation, **GHL calendar URLs**, SEO keywords |
+| `src/data/spaces.ts` | Every rentable space — name, copy, capacity, amenities, map zone, gallery |
+| `src/data/useCases.ts` | The 20 use cases on `/use-cases` and recommended spaces for each |
+| `src/data/impact.ts` | Animated counter values on the home & impact pages |
+| `src/data/gallery.ts` | Gallery items grouped by area |
+| `src/data/partner.ts` | Invest / Advocate / Partner tracks + partnership types |
+
+### Replacing GHL calendar links
+
+Open `src/data/config.ts` and replace the placeholder URLs in `siteConfig.booking.*`.
+Any URL containing `REPLACE_WITH_GHL` renders a clear "placeholder" overlay until updated.
+
+### Replacing placeholder images
+
+Image slots are rendered by `<Placeholder />` and labeled in-page. Drop real photos
+into `/public/spaces/`, `/public/gallery/`, etc., then update the corresponding
+`src` paths in `src/data/spaces.ts` and `src/data/gallery.ts`.
+
+### Updating contact info
+
+Change `siteConfig.contact` and `siteConfig.address` in `src/data/config.ts`.
+The header, footer, contact page, and JSON-LD update automatically.
+
+---
+
+## Site map
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Cinematic scroll-driven entry → pillars → spaces → use cases → about → impact → CTA |
+| `/spaces` | Every space, grouped by category |
+| `/map` | 2D top-down interactive property map with modal cards |
+| `/walkthrough` | Scroll-snap 3D-feel walkthrough (parking → back studios) |
+| `/book` | GHL calendar + tour request + full event inquiry form |
+| `/use-cases` | 20 use cases with recommended spaces |
+| `/about` | BASE story, mission, equity, network |
+| `/impact` | Animated impact counters + stories |
+| `/partner` | Invest · Advocate · Partner + partnership inquiry form |
+| `/gallery` | Gallery sections by area |
+| `/contact` | Direct contact info + Google Maps embed |
+
+---
+
+## Booking pipeline
+
+1. Visitor lands on `/book`
+2. Picks a calendar time **OR** fills the inquiry form
+3. Form posts to `/api/inquiry` (currently logs to server console — wire to GHL/CRM)
+4. Tour and partner forms post the same endpoint with `formType` flags
+
+> **Note:** the booking form includes the disclaimer
+> *"Submitting this form does not confirm your booking. A BASE team member will
+> contact you to confirm availability, pricing, and event requirements."*
+
+---
+
+## Accessibility & UX
+
+- Skip-to-content link
+- Focus rings on every interactive element
+- `prefers-reduced-motion` respected on the cinematic hero and walkthrough
+- Semantic landmarks (`<header>`, `<main>`, `<nav>`, `<footer>`, `<section>`)
+- Mobile-first responsive layouts
+
+---
+
+## Folder layout
+
+```
+src/
+├── app/                # App Router pages
+│   ├── (api routes)
+│   ├── book/
+│   ├── spaces/
+│   ├── map/
+│   ├── walkthrough/
+│   ├── use-cases/
+│   ├── about/
+│   ├── impact/
+│   ├── partner/
+│   ├── gallery/
+│   ├── contact/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── globals.css
+│   ├── robots.ts
+│   └── sitemap.ts
+├── components/
+│   ├── brand/          # Logo
+│   ├── layout/         # Header, Footer, StickyCTA
+│   ├── home/           # InteractiveEntry, PillarsStrip, ImpactSection, ...
+│   ├── map/            # PropertyMap + modal
+│   ├── walkthrough/    # 3D-feel walkthrough
+│   ├── spaces/         # SpaceCard
+│   ├── booking/        # InquiryForm, TourForm, PartnerForm, GHLCalendar
+│   ├── seo/            # JSON-LD
+│   └── ui/             # Placeholder, Reveal, Counter, SectionHeading, PageHeader
+└── data/               # ⭐ ALL EDITABLE CONTENT LIVES HERE
+```
+
+---
+
+## SEO
+
+- `metadata` set per route with copy tuned for Wilmington event-venue search
+- `siteConfig.seoKeywords` reused naturally throughout the site
+- Open Graph + Twitter card defaults
+- JSON-LD `EventVenue` schema injected globally
+- `sitemap.xml` + `robots.txt` generated by Next.js
+
+---
+
+## What to do next
+
+- [ ] Replace placeholder photos under `/public/`
+- [ ] Drop real GHL calendar URLs into `src/data/config.ts`
+- [ ] Confirm exact address (ZIP code) and update `siteConfig.address.zip`
+- [ ] Wire `/api/inquiry` to GoHighLevel webhook or Zapier
+- [ ] (Optional) Replace the walkthrough placeholders with a Matterport / 3D tour embed
